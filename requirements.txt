@@ -1,0 +1,4 @@
+pip install pyautogui
+pip install colorama
+pip install discord_webhook
+pip install bs4
