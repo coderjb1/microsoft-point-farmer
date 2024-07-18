@@ -1,4 +1,5 @@
 # Microsoft Point Farmer
+# ⚠️ This script and project is made for educational purposes only ⚠️
 
 'This script automates search queries on Microsoft Edge to earn points with Bing Rewards.'
 
