@@ -5,12 +5,11 @@ import requests
 from bs4 import BeautifulSoup
 import pyautogui as pg  # Import pyautogui for keyboard control
 
-# Action speed set to 2 seconds for faster operation
-action_speed = 2
+# Action speed set to 1 second for faster operation
+action_speed = 1
 
 def new_window():
     print("Opening new window...")
-    time.sleep(action_speed)
     with pg.hold('ctrl'):
         pg.press('n')
     time.sleep(action_speed)
@@ -23,16 +22,16 @@ def close_window():
 
 def write(question):
     print(f"Writing question: {question}")
-    time.sleep(action_speed)
     pg.typewrite(question, interval=0.03)  # Use pg (pyautogui) to type the question
     time.sleep(action_speed)
     pg.press('enter')
     time.sleep(action_speed)
 
 def get_questions():
-    with open('questions.txt', 'r') as file:
-        questions = file.readlines()
-    return [question.strip() for question in questions]
+    url = 'https://raw.githubusercontent.com/coderjb1/microsoft-point-farmer/main/questions.txt'  # Update this URL to the raw file URL
+    response = requests.get(url)
+    questions = response.text.split('\n')
+    return [question.strip() for question in questions if question.strip()]
 
 def send_webhook(message, status):
     if use_webhook:
@@ -67,7 +66,7 @@ logo = """
 # ASCII art title
 title = """
 \033[32m[✔] https://github.com/coderjb1            [✔]
-\033[32m[✔]            Version 1.0.0               [✔]
+\033[32m[✔]            Version 1.1.0               [✔]
 \033[37m⚠️ This script is made for educational purposes only ⚠️ 
 """
 
@@ -94,7 +93,7 @@ if x != 0:
         # Start Edge
         print("Starting Edge browser...")
         sb.Popen(r'"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"')  # Update this line if necessary
-        time.sleep(8)
+        time.sleep(5)
 
         question = random.choice(questions)
         questions.remove(question)
@@ -107,7 +106,7 @@ if x != 0:
 
 # Open rewards.bing.com
 sb.Popen(r'"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" https://rewards.bing.com/')  # Update the path if necessary
-time.sleep(8)
+time.sleep(5)
 
 # Send a webhook message that the script has finished
 if use_webhook:
